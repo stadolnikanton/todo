@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block main %}
+<form action="/add_task" method="POST">
+    <input class="input" ype="text" name="title" placeholder="Что нужно сделать" required>
+    <input class="input" type="text" name="description" placeholder="Описание">
+    <button class="input input_btn"type="submit">Add task</button>
+</form>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <nav class="nav">
+                {% if session.logged_in %}
+                <a href="/user"><i class="fa-solid fa-bars"></i></a>
+                {% else %}
+                    <a href="/login" ><i class="fa-solid fa-user"></i></a>
+                {% endif %}
+            </nav>
+            <h4 class="header-title"><a href="/">Todo List</a></h4>
+            <nav class="account-nav">
+                {% if session.logged_in %}
+                <!-- <span>Hello, {{ session.user_name }}</span> -->
+                    <a href="/logout" ><i class="fa-solid fa-right-from-bracket"></i></a>
+                {% else %}
+                    <a href="/register" ><i class="fa-solid fa-user-plus"></i></a>
+                {% endif %}
+            </nav>
+        </header>
+        <main class="main">
+            {% block main %}{% endblock %}
+        </main>
+        <footer class="footer"></footer>
+    </div>
+
+    <script src="https://kit.fontawesome.com/75bfbb9802.js" crossorigin="anonymous"></script>
+</body>
+</html>

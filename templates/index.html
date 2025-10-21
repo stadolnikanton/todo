@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block main %}
+    {% if not session.logged_in%} 
+    <div class="main__center">     
+        <h2 class="main_h2">Добро пожаловать!</h2>
+        <p>Войдите или зарегистрируйтесь!</p>
+    </div/
+    {% endif %}
+
+    {% if session.logged_in %}
+        {% if not tasks %}     
+            <h2 class="main_h2">No tasks</h2>
+        {% else %}
+        <ul class="task_list">
+            {% for task in tasks %}
+                <li class="task_item">
+                    <a href="/task/done/{{task.id}}"><i class="fa-solid fa-check"></i></a>
+                    <a href="/task/{{task.id}}" class="task_link">{{task.name}}</a>
+                    <a href="/task/delete/{{task.id}}"><i class="fa-solid fa-trash"></i></a>
+                </li>
+            {% endfor %}
+        </ul>
+
+            {% endif %} 
+    <a href="/add_task" class="btn-add-task">+ New task</a>
+    {% endif %}
+
+    
+     
+{% endblock %}

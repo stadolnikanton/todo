@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block main %}
+
+<ul class="task_list">
+    {% for task in tasks %}
+    <li class="task_item"><a href="/task/{{task_id}}" class="task_link">{{task.name}}</a></li>
+    {% endfor %}
+</ul>
+
+{% if session.logged_in %}
+    <a href="/add_task" class="btn-add-task">+ New task</a>
+{% endif %}
+{% endblock %}
