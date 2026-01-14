@@ -1,16 +1,54 @@
 {% extends "base.html" %}
 
-{% block title %}Todo List{% endblock %}
+{% block title %}{{ task.name }}{% endblock %}
 
 {% block main %}
-
-<ul class="task_list">
-    {% for task in tasks %}
-    <li class="task_item"><a href="/task/{{task_id}}" class="task_link">{{task.name}}</a></li>
-    {% endfor %}
-</ul>
-
-{% if session.logged_in %}
-    <a href="/add_task" class="btn-add-task">+ New task</a>
-{% endif %}
+<div class="task-detail">
+    <div class="task-detail-header">
+        <h2 class="task-detail-title {% if task.is_completed %}task_completed{% endif %}">
+            {{ task.name }}
+        </h2>
+        {% if task.is_completed %}
+            <span class="task-status task-status-completed">
+                <i class="fa-solid fa-check-circle"></i> Выполнено
+            </span>
+        {% else %}
+            <span class="task-status task-status-pending">
+                <i class="fa-solid fa-clock"></i> В процессе
+            </span>
+        {% endif %}
+    </div>
+    
+    <div class="task-detail-content">
+        <div class="task-detail-section">
+            <h3>Описание:</h3>
+            <p class="task-description">
+                {% if task.description %}
+                    {{ task.description }}
+                {% else %}
+                    <em>Описание отсутствует</em>
+                {% endif %}
+            </p>
+        </div>
+        
+        <div class="task-detail-section">
+            <h3>Дата создания:</h3>
+            <p class="task-date">{{ task.created_at.strftime('%d.%m.%Y %H:%M') }}</p>
+        </div>
+    </div>
+    
+    <div class="task-detail-actions">
+        {% if not task.is_completed %}
+            <a href="/task/done/{{ task.id }}" class="btn-action btn-complete">
+                <i class="fa-solid fa-check"></i> Отметить как выполненное
+            </a>
+        {% endif %}
+        <a href="/task/delete/{{ task.id }}" class="btn-action btn-delete" onclick="return confirm('Вы уверены, что хотите удалить эту задачу?')">
+            <i class="fa-solid fa-trash"></i> Удалить задачу
+        </a>
+        <a href="/" class="btn-action btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Назад к списку
+        </a>
+    </div>
+</div>
 {% endblock %}

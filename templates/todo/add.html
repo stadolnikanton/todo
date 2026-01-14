@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
+{% block title %}Добавить задачу{% endblock %}
+
 {% block main %}
-<form action="/add_task" method="POST">
-    <input class="input" ype="text" name="title" placeholder="Что нужно сделать" required>
-    <input class="input" type="text" name="description" placeholder="Описание">
-    <button class="input input_btn"type="submit">Add task</button>
-</form>
+<div class="form-container">
+    <h2 class="main_h2">Добавить новую задачу</h2>
+    <form action="/add_task" method="POST">
+        <input class="input" type="text" name="title" placeholder="Название задачи" required>
+        <textarea class="input input_textarea" name="description" placeholder="Описание задачи (необязательно)" rows="4"></textarea>
+        <div class="form-actions">
+            <button class="input input_btn" type="submit">Добавить задачу</button>
+            <a href="/" class="btn-cancel">Отмена</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

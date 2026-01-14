@@ -3,31 +3,44 @@
 {% block title %}Todo List{% endblock %}
 
 {% block main %}
-    {% if not session.logged_in%} 
+    {% if not session.logged_in %}
     <div class="main__center">     
         <h2 class="main_h2">Добро пожаловать!</h2>
-        <p>Войдите или зарегистрируйтесь!</p>
-    </div/
+        <p>Войдите или зарегистрируйтесь, чтобы начать работу с задачами!</p>
+        <div class="auth-links">
+            <a href="/login" class="btn-auth">Войти</a>
+            <a href="/register" class="btn-auth">Зарегистрироваться</a>
+        </div>
+    </div>
     {% endif %}
 
     {% if session.logged_in %}
         {% if not tasks %}     
-            <h2 class="main_h2">No tasks</h2>
+            <div class="main__center">
+                <h2 class="main_h2">У вас пока нет задач</h2>
+                <p>Создайте свою первую задачу!</p>
+            </div>
         {% else %}
         <ul class="task_list">
             {% for task in tasks %}
-                <li class="task_item">
-                    <a href="/task/done/{{task.id}}"><i class="fa-solid fa-check"></i></a>
-                    <a href="/task/{{task.id}}" class="task_link">{{task.name}}</a>
-                    <a href="/task/delete/{{task.id}}"><i class="fa-solid fa-trash"></i></a>
+                <li class="task_item {% if task.is_completed %}task_completed{% endif %}">
+                    {% if not task.is_completed %}
+                        <a href="/task/done/{{task.id}}" class="task_action" title="Отметить как выполненное">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                    {% else %}
+                        <span class="task_action task_done"><i class="fa-solid fa-check-circle"></i></span>
+                    {% endif %}
+                    <a href="/task/{{task.id}}" class="task_link {% if task.is_completed %}task_link_completed{% endif %}">
+                        {{task.name}}
+                    </a>
+                    <a href="/task/delete/{{task.id}}" class="task_action task_delete" title="Удалить задачу">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
                 </li>
             {% endfor %}
         </ul>
-
-            {% endif %} 
-    <a href="/add_task" class="btn-add-task">+ New task</a>
+        {% endif %} 
+        <a href="/add_task" class="btn-add-task">+ Новая задача</a>
     {% endif %}
-
-    
-     
 {% endblock %}
